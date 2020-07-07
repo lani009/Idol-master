@@ -1,6 +1,5 @@
 public class A {
     public A() {
-        // fjdkslajflksa
-       
+        // 앙dkfjdfjdjfkdkfdkfdkfdkjfdk~~~~~~ fjdkslajflksa
     }
 }
