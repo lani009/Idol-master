@@ -14,11 +14,10 @@ public class MainActivity<materialCalendarView> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MaterialCalendarView materialCalendarView = findViewById(R.id.calendarView);
-        materialCalenderView.setSelectedDate(CalendarDay.today()); /////////
+        MaterialCalendarView materialCalendarView;
 
-        MaterialCalendarView materialCalendarView; ////////
-        materialCalendarView = findViewById(R.id.calenderView);
+        materialCalendarView = findViewById(R.id.calendarView);
+
 
         materialCalendarView.addDecorators(
                 new SundayDecorator(),
