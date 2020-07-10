@@ -18,10 +18,14 @@ public class MainActivity<materialCalendarView> extends AppCompatActivity {
 
         materialCalendarView = findViewById(R.id.calendarView);
 
-
+    //////주말 색상 추가 ////
         materialCalendarView.addDecorators(
                 new SundayDecorator(),
                 new SaturdayDecorator()
+        );
+
+        materialCalendarView.addDecorators(
+                new MySelectorDecorator(this)
         );
 
     }
