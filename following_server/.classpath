@@ -8,9 +8,14 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.5">
+		<attributes>
+			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
@@ -19,10 +24,38 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.49-bin.jar"/>
+	<classpathentry kind="lib" path="D:/Idol-master/following_server/src/main/webapp/WEB-INF/lib/commons-dbcp2-2.7.0/commons-dbcp2-2.7.0.jar"/>
+	<classpathentry kind="lib" path="D:/Idol-master/following_server/src/main/webapp/WEB-INF/lib/commons-logging-1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/Idol-master/following_server/src/main/webapp/WEB-INF/lib/commons-pool2-2.8.0/commons-pool2-2.8.0.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/catalina-storeconfig.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/ecj-4.6.3.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/jaspic-api.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-de.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-ja.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-ko.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-ru.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-i18n-zh-CN.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-jni.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-util-scan.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/tomcat-websocket.jar"/>
+	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.53/apache-tomcat-8.5.53/lib/websocket-api.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
