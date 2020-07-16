@@ -8,14 +8,14 @@
     <servlet-name>hello</servlet-name>
     <jsp-file>/doc/hello.jsp</jsp-file>
   </servlet>
-  <servlet>
-    <servlet-name>main</servlet-name>
-    <jsp-file>/index.jsp</jsp-file>
-  </servlet>
   <servlet-mapping>
     <servlet-name>hello</servlet-name>
     <url-pattern>/doc</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>main</servlet-name>
+    <jsp-file>/index.jsp</jsp-file>
+  </servlet>
   <servlet-mapping>
     <servlet-name>main</servlet-name>
     <url-pattern>/</url-pattern>

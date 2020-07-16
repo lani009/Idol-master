@@ -9,7 +9,7 @@
   <version>0.1</version>
   <packaging>war</packaging>
 
-  <name>following_server Maven Webapp</name>
+  <name>following_server</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
