@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>DBCPInit</servlet-name>
+  	<servlet-class>following_server.jdbc.DBCPInit</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>  
+  <servlet-name>login</servlet-name>
+    <servlet-class>following_server.src.main.java.following_server.Rest_Dao</servlet-class>
+  </servlet>
 </web-app>
