@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="application/json; charset=utf-8"%>
+<%@page import="following_server.Rest_Dao"%>
 <!DOCTYPE html>
 <html>
 <head>

@@ -4,29 +4,25 @@
   <display-name>Following_Server</display-name>
   <servlet>
     <servlet-name>DBCPInit</servlet-name>
-    <servlet-class>following_server.jdbc.DBCPInit</servlet-class>
+    <servlet-class>following_server.jdbc.DBCPInit.java</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 
   <servlet>
-    <servlet-name>DAO</servlet-name>
-    <servlet-class>following_server.src.main.java.following_server.Rest_Dao</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>login</servlet-name>
-    <servlet-class>Login.login.jsp</servlet-class>
+    <jsp-file>/Login/login.jsp</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>getReview</servlet-name>
-    <servlet-class>Review.Get.getReview.jsp</servlet-class>
+    <jsp-file>/Review/Get/getReview.jsp</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>setReview</servlet-name>
-    <servlet-class>Review.Set.setReview.jsp</servlet-class>
+    <jsp-file>/Review/Set/setReview.jsp</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>getTaste</servlet-name>
-    <servlet-class>Taste.Get.getTaste.jsp</servlet-class>
+    <jsp-file>/Taste/Get/getTaste.jsp</jsp-file>
   </servlet>
 
   <servlet-mapping>
@@ -35,7 +31,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>getReview</servlet-name>
-    <url-pattern>/Review/Get</url-pattern>
+    <url-pattern>/review/get</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
