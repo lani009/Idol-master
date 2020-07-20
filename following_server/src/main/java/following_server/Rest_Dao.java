@@ -124,8 +124,28 @@ public class Rest_Dao {
 	 * 
 	 * @param review 리뷰
 	 */
-	public void setReview(String review) {
-
+	public boolean setReview(String review, String place, String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement("Insert into place_review(?,?,?)");
+			pstmt.setString(1, place);
+			pstmt.setString(2, review);
+			pstmt.setString(3, id);
+			rs = pstmt.executeQuery();
+			
+		} catch (Exception e) {
+			System.out.println("리뷰등록 오류");
+			e.printStackTrace();
+			return false;
+		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+			return true;
+		}
 	}
 
 	/**
