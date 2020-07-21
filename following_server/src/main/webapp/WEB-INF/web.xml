@@ -24,6 +24,10 @@
     <servlet-name>getTaste</servlet-name>
     <jsp-file>/Taste/Get/getTaste.jsp</jsp-file>
   </servlet>
+  <servlet>
+    <servlet-name>setTaste</servlet-name>
+    <jsp-file>/Taste/Set/setTaste.jsp</jsp-file>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -32,6 +36,18 @@
   <servlet-mapping>
     <servlet-name>getReview</servlet-name>
     <url-pattern>/review/get</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>setReview</servlet-name>
+    <url-pattern>/review/set</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>getTaste</servlet-name>
+    <url-pattern>/taste/get</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>setTaste</servlet-name>
+    <url-pattern>/taste/set</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

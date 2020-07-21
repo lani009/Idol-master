@@ -64,9 +64,34 @@ public class Rest_Dao {
 	 * 
 	 * @return 취향 태그
 	 */
-	public String getTaste() {
-
-		return null;
+	public String getTaste(String username) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONObject obj = new JSONObject();
+		try {
+			conn = ConnectionProvider.getConnection();
+			JSONArray taste= new JSONArray();
+			JSONObject temp = new JSONObject();
+			pstmt = conn.prepareStatement("SELECT * FROM user_taste Where username=?");
+			pstmt.setString(1, username);
+			rs = pstmt.executeQuery();
+			System.out.println(rs);
+			while (rs.next()) {
+				temp.put("username", rs.getString("username"));
+				temp.put("tagcontent", rs.getString("tagcontent"));
+				taste.add(temp);
+			}
+			obj.put("taste", taste);
+			
+		} catch (Exception e) {
+			System.out.println("리뷰불러오기오류");
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+			return obj.toString();
+		}
 	}
 
 	/**
@@ -74,9 +99,34 @@ public class Rest_Dao {
 	 * 
 	 * @param tag
 	 */
-	public void setTaste(String tag) {
+	public boolean setTaste(String username, String tag) {///클라이언트 측에서 태그 선택 개수 만큼 메서드 실행 바람. 1번에 1개씩 저장가능
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement("insert into user_taste(?,?)");
+			pstmt.setString(1, username);
+			pstmt.setString(2, tag);
+			rs = pstmt.executeQuery();
+			
+		} catch (Exception e) {
+			System.out.println("취향등록 오류");
+			e.printStackTrace();
+			return false;
+		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+			return true;
+		}
 
 	}
+
+
+
+
+
 
 	public String getPlace() {
 		return null;
@@ -154,8 +204,12 @@ public class Rest_Dao {
 	 * @return 추천 장소
 	 */
 	public String recommend() {
-
 		return null;
+		
+
+
+
+
 	}
 
 	private static class Holder {

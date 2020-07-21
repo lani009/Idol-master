@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="application/json; charset=utf-8"%>
 <%@page import="following_server.Rest_Dao"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<%
+boolean bool = Rest_Dao.getInstance().setTaste(request.getParameter("id"),request.getParameter("tagcontent"));
+if(bool) {
+		out.print("{[True]}");
+	} else {
+		out.print("{[False]}");
+	}
+	
 
-</body>
-</html>
+
+%>
