@@ -7,6 +7,11 @@ import java.net.URLConnection;
 
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import exception.PlaceNotFoundException;
 import struct.Place;
 
@@ -51,7 +56,7 @@ public class RestRequest {
             URL url = new URL(ServerADDRESS + "/login");
             URLConnection conn = url.openConnection();
             byte[] bStream = new byte[255];
-            conn.getInputStream().read(bStream);
+            conn.getInputStream().read(bStream);    // byte stream 읽기
             conn.getInputStream().close();
             String body = new String(bStream);
             if (body.equals("{[True]}")) {
@@ -67,8 +72,21 @@ public class RestRequest {
         return false;
     }
 
+    private JSONObject getJSONObject(String uri) throws IOException {
+        URL url = new URL(ServerADDRESS + uri);
+        URLConnection conn = url.openConnection();
+        byte[] bStream = conn.getInputStream().readAllBytes();
+        JSONParser parser = new JSONParser();
+        try {
+            return (JSONObject) parser.parse(new String(bStream));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;    
+    }
+
     /**
-     * 인기 태그 가져오기 취향 선택 시에 사용
+     * 인기 태그 가져오기. 취향 선택 시에 사용
      * 
      * @return 인기 태그 리스트
      */
@@ -109,5 +127,13 @@ public class RestRequest {
      */
     public List<Place> getRecommendedPlace() {
         return null;
+    }
+
+    /**
+     * 사용자 로그아웃
+     */
+    public void logout() {
+        userId = null;
+        isLoggedIn = false;
     }
 }
