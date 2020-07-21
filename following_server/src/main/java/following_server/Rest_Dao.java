@@ -9,8 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import following_server.jdbc.JdbcUtil;
 import following_server.jdbc.connection.ConnectionProvider;
+import following_server.jdbc.JdbcUtil;
 
 
 
@@ -48,13 +48,13 @@ public class Rest_Dao {
 			System.out.println("로그인오류");
 			e.printStackTrace();
 		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
 			if (rs == null) {
 				return true;
 			} else {
 				return false;
 			}
-			JdbcUtil.close(pstmt);
-			JdbcUtil.close(conn);
 		}
 	
 	}
@@ -112,9 +112,9 @@ public class Rest_Dao {
 			System.out.println("리뷰불러오기오류");
 			e.printStackTrace();
 		} finally {
-			return obj.toString();
 			JdbcUtil.close(pstmt);
 			JdbcUtil.close(conn);
+			return obj.toString();
 		}
 
 	}
