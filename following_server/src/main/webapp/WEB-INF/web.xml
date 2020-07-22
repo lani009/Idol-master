@@ -4,7 +4,7 @@
   <display-name>Following_Server</display-name>
   <servlet>
     <servlet-name>DBCPInit</servlet-name>
-    <servlet-class>following_server.jdbc.DBCPInit.java</servlet-class>
+    <servlet-class>following_server.jdbc.DBCPInit</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 
