@@ -12,7 +12,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import following_server.jdbc.connection.ConnectionProvider;
-import following_server.jdbc.JdbcUtil;
 
 /**
  * Singleton Pattern: RESTFUL DAO
@@ -48,8 +47,8 @@ public class Rest_Dao {
 			System.out.println("로그인오류");
 			e.printStackTrace();
 		} finally {
-			JdbcUtil.close(pstmt);
-			JdbcUtil.close(conn);
+			close(pstmt);
+			close(conn);
 			if (rs == null) {
 				return true;
 			} else {
@@ -64,6 +63,7 @@ public class Rest_Dao {
 	 * 
 	 * @return 취향 태그
 	 */
+	@SuppressWarnings("unchecked")
 	public String getTaste(String username) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -90,8 +90,8 @@ public class Rest_Dao {
 		} finally {
 			close(pstmt);
 			close(conn);
-			return obj.toString();
 		}
+		return obj.toString();
 	}
 
 	/**
@@ -102,24 +102,23 @@ public class Rest_Dao {
 	public boolean setTaste(String username, String tag) {/// 클라이언트 측에서 태그 선택 개수 만큼 메서드 실행 바람. 1번에 1개씩 저장가능
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		try {
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement("insert into user_taste(?,?)");
 			pstmt.setString(1, username);
 			pstmt.setString(2, tag);
-			rs = pstmt.executeQuery();
+			pstmt.executeUpdate();
 
 		} catch (Exception e) {
 			System.out.println("취향등록 오류");
 			e.printStackTrace();
 			return false;
 		} finally {
-			JdbcUtil.close(pstmt);
-			JdbcUtil.close(conn);
-			return true;
+			close(pstmt);
+			close(conn);
 		}
+		return true;
 
 	}
 
@@ -132,7 +131,7 @@ public class Rest_Dao {
 	 * 
 	 * @return 리뷰
 	 */
-	@SuppressWarnings("finally")
+	@SuppressWarnings("unchecked")
 	public String getReview(String place) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -159,9 +158,8 @@ public class Rest_Dao {
 		} finally {
 			close(pstmt);
 			close(conn);
-			return obj.toString();
 		}
-
+		return obj.toString();
 	}
 
 	/**
@@ -172,7 +170,6 @@ public class Rest_Dao {
 	public boolean setReview(String review, String place, String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		try {
 			conn = ConnectionProvider.getConnection();
@@ -180,17 +177,17 @@ public class Rest_Dao {
 			pstmt.setString(1, place);
 			pstmt.setString(2, review);
 			pstmt.setString(3, id);
-			rs = pstmt.executeQuery();
+			pstmt.executeUpdate();
 
 		} catch (Exception e) {
 			System.out.println("리뷰등록 오류");
 			e.printStackTrace();
 			return false;
 		} finally {
-			JdbcUtil.close(pstmt);
+			close(pstmt);
 			close(conn);
-			return true;
 		}
+		return true;
 	}
 
 	/**

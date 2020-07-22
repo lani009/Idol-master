@@ -40,6 +40,7 @@ public class DBCPInit extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void initConnectionPool() {
 
 		try {
@@ -65,7 +66,6 @@ public class DBCPInit extends HttpServlet {
 			PoolingDriver driver = (PoolingDriver) DriverManager.getDriver("jdbc:apache:commons:dbcp:");
 			driver.registerPool("following", connectionPool);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 
