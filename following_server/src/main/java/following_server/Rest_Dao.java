@@ -5,8 +5,10 @@ import static following_server.jdbc.JdbcUtil.close;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,31 +34,44 @@ public class Rest_Dao {
 	 * @param id
 	 * @return true or false
 	 */
-	@SuppressWarnings("finally")
+	
 	public boolean isLogin(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		boolean result = false;
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("SELECT username FROM user Where username=?");
+			if(conn != null){
+				System.out.println("커넥팅");
+			}else{
+				System.out.println("다시해이새끼야");
+			}
+			pstmt = conn.prepareStatement("select username from user where username=?");
 			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			System.out.println(rs);
-		} catch (Exception e) {
+			rs = pstmt.executeQuery();	// RS -> ResultSet 객체
+		
+			rs.last();
+			if (rs.getRow()!=0) {
+				result =  true;
+			} else {
+				result =  false;
+			}
+		} catch (SQLException e) {
 			System.out.println("로그인오류");
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 			close(conn);
-			if (rs == null) {
-				return true;
-			} else {
-				return false;
-			}
 		}
-
+		return result;
 	}
+
+
+
+
+
+
 
 	/**
 	 * 취향 불러오기
@@ -72,17 +87,24 @@ public class Rest_Dao {
 		try {
 			conn = ConnectionProvider.getConnection();
 			JSONArray taste = new JSONArray();
-			JSONObject temp = new JSONObject();
 			pstmt = conn.prepareStatement("SELECT * FROM user_taste Where username=?");
 			pstmt.setString(1, username);
 			rs = pstmt.executeQuery();
-			System.out.println(rs);
-			while (rs.next()) {
+			rs.first();
+			if(rs.getRow() == 0) {
+				// 예외처리
+			}
+			rs.beforeFirst();
+			System.out.println("수정 됨");
+			while (rs.next()){
+				System.out.println(rs.getString("tagcontent"));
+				JSONObject temp = new JSONObject();
 				temp.put("username", rs.getString("username"));
 				temp.put("tagcontent", rs.getString("tagcontent"));
 				taste.add(temp);
 			}
 			obj.put("taste", taste);
+			System.out.println(taste);
 
 		} catch (Exception e) {
 			System.out.println("리뷰불러오기오류");
@@ -105,7 +127,7 @@ public class Rest_Dao {
 
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("insert into user_taste(?,?)");
+			pstmt = conn.prepareStatement("INSERT INTO user_tag (user_id, tag_id) VALUES ( (SELECT id from user WHERE username=?), (SELECT id from tag WHERE tagcontent=?) )");
 			pstmt.setString(1, username);
 			pstmt.setString(2, tag);
 			pstmt.executeUpdate();
@@ -141,7 +163,7 @@ public class Rest_Dao {
 			conn = ConnectionProvider.getConnection();
 			JSONArray reviews = new JSONArray();
 			JSONObject temp = new JSONObject();
-			pstmt = conn.prepareStatement("SELECT * FROM place_view Where place_name=?");
+			pstmt = conn.prepareStatement("SELECT * FROM place_review Where place_name=?");
 			pstmt.setString(1, place);
 			rs = pstmt.executeQuery();
 			System.out.println(rs);
@@ -167,16 +189,16 @@ public class Rest_Dao {
 	 * 
 	 * @param review 리뷰
 	 */
-	public boolean setReview(String review, String place, String id) {
+	public boolean setReview(String place, String id, String review) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			conn = ConnectionProvider.getConnection();
-			pstmt = conn.prepareStatement("Insert into place_review(?,?,?)");
+			pstmt = conn.prepareStatement("INSERT INTO review (palce_id, writer_id, content) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?)");
 			pstmt.setString(1, place);
-			pstmt.setString(2, review);
-			pstmt.setString(3, id);
+			pstmt.setString(2, id);
+			pstmt.setString(3, review);
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
