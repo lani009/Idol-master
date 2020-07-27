@@ -1,18 +1,9 @@
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
   <display-name>following_restful</display-name>
-  <servlet>
-    <servlet-name>DBCPInit</servlet-name>
-    <servlet-class>following_server.jdbc.DBCPInit</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet>
-    <servlet-name>login</servlet-name>
-    <servlet-class>following_server.src.main.java.following_server.Rest_Dao</servlet-class>
-  </servlet>
-
   <servlet>
     <servlet-name>hello</servlet-name>
     <jsp-file>/doc/hello.jsp</jsp-file>

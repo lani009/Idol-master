@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD:followingApp/app/.project
 	<name>app</name>
 	<comment>Project app created by Buildship.</comment>
+=======
+	<name>following_server</name>
+	<comment></comment>
+>>>>>>> 7c3eb923c3cc890d9275ba9163ff555786437e83:following_server/.project
 	<projects>
 	</projects>
 	<buildSpec>
