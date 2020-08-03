@@ -13,17 +13,19 @@ class RESTConnection:
         self.clientSocket, addr_info = self.serverSocket.accept()
         print('accept')
         print('--client information--')
-        print(self.clientSocket, addr_info)
+        print(addr_info)
         return self
 
 
     def recv(self):
         length = self.clientSocket.recv(4)
         length = int.from_bytes(length, "little")
-        print("len", length)
-        return self.clientSocket.recv(length).decode()
+        recvStr = self.clientSocket.recv(length).decode()
+        print('recv:', recvStr)
+        return recvStr
 
     def send(self, text):
-        length = len(text.encode())
+        length = len(str(text).encode())    # str 로 변환한뒤, 인코딩 하여 전송
         self.clientSocket.sendall(length.to_bytes(4, byteorder='little'))
-        self.clientSocket.sendall(text.encode())
+        self.clientSocket.sendall(str(text).encode())
+        print('send:', str(text).encode())
