@@ -1,8 +1,10 @@
 from konlpy.tag import Kkma
+from gensim.models import fasttext
 
 class TagParser:
     def __init__(self):
         self.kkma = Kkma()
+        self.model = fasttext._load_fasttext_format("../fasttext.bin")
 
     def parse_tag(self, sentence):
         '''
@@ -40,3 +42,15 @@ class TagParser:
         문장을 형태소 별로 토큰화
         '''
         return self.kkma.pos(sentence)
+
+    def most_sim(self, word):
+        '''
+        가장 비슷한 단어 추출
+        '''
+        return self.model.wv.most_similar(word)
+
+    def wmd(self, tag1, tag2):
+        '''
+        tag1와 tag2 사이의 거리를 리턴
+        '''
+        return self.model.wv.wmdistance(tag1, tag2)
