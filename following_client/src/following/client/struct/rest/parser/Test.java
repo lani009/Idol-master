@@ -1,4 +1,4 @@
-package struct.rest.parser;
+package following.client.struct.rest.parser;
 
 import java.io.IOException;
 

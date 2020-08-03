@@ -1,4 +1,4 @@
-package struct;
+package following.client.struct;
 
 public class Review {
     /**

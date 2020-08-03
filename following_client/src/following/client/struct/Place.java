@@ -1,4 +1,4 @@
-package struct;
+package following.client.struct;
 
 import java.util.List;
 
@@ -11,10 +11,15 @@ public class Place {
      * 리뷰
      */
     private List<Review> reviews;
+    /**
+     * 태그
+     */
+    private List<String> tags;
 
-    public Place(String placeName, List<Review> reviews) {
+    public Place(String placeName, List<Review> reviews, List<String> tags) {
         this.placeName = placeName;
         this.reviews = reviews;
+        this.tags = tags;
     }
 
     /**
@@ -29,6 +34,13 @@ public class Place {
      */
     public List<Review> getReviews() {
         return this.reviews;
+    }
+
+    /**
+     * @return 장소에 해당하는 태그
+     */
+    public List<String> getTags() {
+        return this.tags;
     }
 
 }
