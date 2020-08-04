@@ -113,14 +113,14 @@ public class Rest_Dao {
 
 	/**
 	 * 장소태그 불러오기
-	 * 
-	 * 
+	 * @param id 유저 아이디
+	 * @return JSONObejct 리스트
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<JSONObject> getPlaceTag(String id) {
 		Connection conn = null;
-		ResultSet place_character = null;
+		ResultSet place_character = null;	// 장소-태그 테이블
 		ResultSet user_taste = null;
 		List<JSONObject> jsonList = new ArrayList<>();
 		try {
@@ -131,31 +131,30 @@ public class Rest_Dao {
 			
 			place_character.first();
 			if (place_character.getRow() == 0) {
-				// 예외처리
+				// TODO 예외처리
 			}
 			
 			place_character.beforeFirst();
-			// System.out.println("수정 됨");
-		
 			pstmt = conn.prepareStatement("SELECT * FROM user_taste Where username=?");
 			pstmt.setString(1, id);
 			user_taste = pstmt.executeQuery();
 			
 			user_taste.first();
 			if (user_taste.getRow() == 0) {
-				// 예외처리
+				// TODO 예외처리
 			}
 			user_taste.beforeFirst();
-			// JSONObject obj = new JSONObject();	// 모든 태그를 담는 마스터 객체
-			// JSONArray placeTag = new JSONArray();	// 장소에 대한 태그 "장소1": [태그들]
 			JSONArray userJsonArray = new JSONArray();	// 유저에 대한 태그 "user": [태그들]
 			while (user_taste.next()){
-				//System.out.println(user_taste.getString("tagcontent"));
 				userJsonArray.add(user_taste.getString("tagcontent"));
 			}
 			HashMap<String, JSONArray> placeMap = new HashMap<>();
 			JSONArray temp = null;
 			while (place_character.next()) {
+				if (temp.size() >= 5) {
+					// 태그 사이즈는 무조건 5개 이하
+					break;
+				}
 				if (placeMap.containsKey(place_character.getString("place"))) {
 					// 만약에 해당 place에 대한 Key 가 이미 등록 되어 있을 경우
 					temp = placeMap.get(place_character.getString("place"));
@@ -166,16 +165,12 @@ public class Rest_Dao {
 					temp.add(place_character.getString("tagcontent"));
 					placeMap.put(place_character.getString("place"), temp);
 				}	// place는 완성
-				//System.out.println(place_character.getString("tagcontent"));
-				// placeTag.add(place_character.getString("tagcontent"));
-				// obj.put(place_character.getString("place"), placeTag);
 			}
 			placeMap.keySet().stream().forEach(i -> {
 				// 디버깅용
 				System.out.println("\nPlace Tag content");
 				System.out.println(i + ": " + placeMap.get(i).toJSONString() + "\n");
 			});
-			// obj.put("user", userJsonArray);
 			placeMap.keySet().stream().forEach(key -> {
 				JSONObject jsonObjectTemp = new JSONObject();	// 임시 변수
 				jsonObjectTemp.put("place", placeMap.get(key));
@@ -207,14 +202,12 @@ public class Rest_Dao {
 			rs = pstmt.executeQuery();
 			rs.first();
 			if (rs.getRow() == 0) {
-				// 예외처리
+				// TODO 예외처리
 			}
 			rs.beforeFirst();
-			// System.out.println("수정 됨");
 			JSONArray temp = new JSONArray();
 			while (count<10) {
 				rs.next();
-				// System.out.println(rs.getString("tagcontent"));
 				temp.add(rs.getString("tagcontent"));
 				count++;
 			}
@@ -380,9 +373,6 @@ public class Rest_Dao {
 				}else{
 					
 				}
-			
-
-
 		} catch (Exception e) {
 			System.out.println("리뷰등록 오류");
 			e.printStackTrace();
