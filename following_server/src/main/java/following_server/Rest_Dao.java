@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 import javax.servlet.annotation.WebServlet;
 
 import org.json.simple.JSONArray;
@@ -37,7 +38,6 @@ public class Rest_Dao {
 	 * @param id
 	 * @return true or false
 	 */
-
 	public boolean isLogin(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -131,7 +131,7 @@ public class Rest_Dao {
 			
 			place_character.first();
 			if (place_character.getRow() == 0) {
-				// TODO 예외처리
+				return null;
 			}
 			
 			place_character.beforeFirst();
@@ -140,9 +140,9 @@ public class Rest_Dao {
 			user_taste = pstmt.executeQuery();
 			
 			user_taste.first();
-			if (user_taste.getRow() == 0) {
-				// TODO 예외처리
-			}
+			// if (user_taste.getRow() == 0) {
+			// }
+			// !! user_taste는 없을 경우가 없음 !!
 			user_taste.beforeFirst();
 			JSONArray userJsonArray = new JSONArray();	// 유저에 대한 태그 "user": [태그들]
 			while (user_taste.next()){
@@ -201,9 +201,9 @@ public class Rest_Dao {
 			pstmt = conn.prepareStatement("SELECT tagcontent FROM tag ORDER BY tagcount DESC");
 			rs = pstmt.executeQuery();
 			rs.first();
-			if (rs.getRow() == 0) {
-				// TODO 예외처리
-			}
+			// if (rs.getRow() == 0) {
+			// }
+			// !! 태그가 없을 수가 없음 !!
 			rs.beforeFirst();
 			JSONArray temp = new JSONArray();
 			while (count<10) {
@@ -308,9 +308,11 @@ public class Rest_Dao {
 	public boolean setReview(String place, String id, String review) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		DeepLearningSocket dls = new DeepLearningSocket();
 		ResultSet rs= null;
 		ResultSet rss = null;
+		ResultSet rsss = null;
 		try {
 			JSONParser parser = new JSONParser();
 			conn = ConnectionProvider.getConnection();
@@ -336,24 +338,21 @@ public class Rest_Dao {
 				pstmt.setString(1, arr[i]);
 				rs=pstmt.executeQuery();
 
-				close(pstmt);
 			
 			
 				if (!rs.next()){
 					System.out.println("꼬몬요!");
-					pstmt = conn.prepareStatement("INSERT INTO tag (tagcontent, tagcount) VALUES (?,1)");
-					pstmt.setString(1, arr[i]);
-					pstmt.executeUpdate();
-					close(pstmt);
-					
-				}else{
-					pstmt = conn.prepareStatement("update tag set tagcount = tagcount + 1 where tagcontent = ?");
-					pstmt.setString(1, arr[i]);
-					pstmt.executeUpdate();
-
+					pstmt2 = conn.prepareStatement("INSERT INTO tag (tagcontent, tagcount) VALUES (?,1)");
+					pstmt2.setString(1, arr[i]);
+					pstmt2.executeUpdate();
+					close(pstmt2);
+				} else {
+					pstmt2 = conn.prepareStatement("update tag set tagcount = tagcount + 1 where tagcontent = ?");
+					pstmt2.setString(1, arr[i]);
+					pstmt2.executeUpdate();
+					close(pstmt2);
 				}
 				close(pstmt);
-
 			}
 			//사용자가 갔던 장소를 추가
 			
@@ -370,15 +369,38 @@ public class Rest_Dao {
 					pstmt.setString(1, id);
 					pstmt.setString(2, place);
 					pstmt.executeUpdate();
-				}else{
-					
 				}
+			    close(pstmt);
+				//리뷰에서 받아온 태그 arr for 문돌리면서 place_tag 에 추가시킨다.
+				//if(태그가 존재하지 않을 경우) 새로 추가하고 카운트 1 추가
+				//else 카운트 1 증가
+				for(int i=0; i<arr.length; i++){
+					pstmt = conn.prepareStatement("select tag_id from place_tag where place_id=(SELECT id from place WHERE place=?) and tag_id=(SELECT id from tag WHERE tagcontent=?)");
+					pstmt.setString(1, place);
+					pstmt.setString(2, arr[i]);
+					rsss = pstmt.executeQuery();
+					if (!rsss.next()){
+						System.out.println("꼬몬요!");
+						pstmt2 = conn.prepareStatement("INSERT INTO place_tag (place_id,tag_id,tagcount) VALUES ((SELECT id from place WHERE place=?), (SELECT id from tag WHERE tagcontent=?),1)");
+						pstmt2.setString(1, place);
+						pstmt2.setString(2, arr[i]);
+						pstmt2.executeUpdate();
+						close(pstmt2);
+					}else{
+						pstmt2 = conn.prepareStatement("update place_tag set tagcount = tagcount + 1 where tag_id = (SELECT id from tag WHERE tagcontent=?) AND place_id =(SELECT id from place WHERE place=?)");
+						pstmt2.setString(1, arr[i]);
+						pstmt2.setString(2, place);
+						pstmt2.executeUpdate();
+					}
+				}
+
 		} catch (Exception e) {
 			System.out.println("리뷰등록 오류");
 			e.printStackTrace();
 			return false;
 		} finally {
 			close(pstmt);
+			close(pstmt2);
 			close(conn);
 			close(dls);
 		}
@@ -387,7 +409,7 @@ public class Rest_Dao {
 
 	/**
 	 * 추천
-	 * 
+	 * @param id 유저 아이디
 	 * @return 추천 장소
 	 */
 	@SuppressWarnings("unchecked")
@@ -395,7 +417,6 @@ public class Rest_Dao {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		// ResultSet rs = null;
 		DeepLearningSocket dls = new DeepLearningSocket(); // 딥러닝 소켓 연결 수행
 		
 		try {
@@ -411,13 +432,6 @@ public class Rest_Dao {
 			for (int i = 0; i < userPlaceDistance.length; i++) {
 				System.out.printf("장소명: %s 거리: %s\n", userPlaceDistance[i][0], userPlaceDistance[i][1]);
 			}
-			// System.out.println(userPlaceTag);
-			// String placeSim = dls.placeUserSim(userPlaceTag);	// 소켓 연결을 통해서 유사도 받아옴.
-			
-			// JSONParser parser = new JSONParser();
-			// JSONObject sim = (JSONObject) parser.parse(placeSim);
-
-			// System.out.println(sim);
 			for (int i = userPlaceDistance.length-1; i > 0; i--) {
 				for (int j = 0; j < i; j++) {
 					if (userPlaceDistance[j][1].compareTo(userPlaceDistance[j][1]) == 1) {
@@ -438,11 +452,6 @@ public class Rest_Dao {
 			jsonObject.put("place", popularPlace);
 
 			return jsonObject.toJSONString();
-
-
-
-
-
 		} catch (Exception e) {
 			System.out.println("리뷰불러오기오류");
 			e.printStackTrace();
