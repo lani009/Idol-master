@@ -66,4 +66,24 @@ public class JdbcUtil {
 			}
 		}
 	}
+
+	/**
+	 * ResultSet이 Empty인지 아닌지 체크
+	 * @param rs ResultSet
+	 * @return isEmpty
+	 */
+	public static boolean isEmpty(ResultSet rs) {
+		try {
+			rs.last();
+			if (rs.getRow() == 0) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		throw new RuntimeException();
+	}
 }
