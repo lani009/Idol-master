@@ -126,8 +126,9 @@ public class Rest_Dao {
 		try {
 			conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = null;
-			pstmt = conn.prepareStatement("SELECT  * FROM place_tag_idol WHERE place_tag_idol.name=(SELECT idol.name FROM user INNER JOIN idol ON user.fandom = idol.id WHERE user.username=?)");
+			pstmt = conn.prepareStatement("SELECT  * FROM place_tag_idol WHERE place_tag_idol.name=(SELECT idol.name FROM user INNER JOIN idol ON user.fandom = idol.id WHERE user.username=?) AND place_tag_idol.place NOT in (SELECT user_visited.visited FROM user_visited WHERE user_visited.username=?)");
 			pstmt.setString(1, id);
+			pstmt.setString(2, id);
 			place_character = pstmt.executeQuery();
 			
 			place_character.first();
@@ -361,21 +362,21 @@ public class Rest_Dao {
 			}
 			//사용자가 갔던 장소를 추가
 			
-			pstmt = conn.prepareStatement("select (SELECT id FROM place WHERE place=?) from user_place where user_id=(SELECT id from user WHERE username=?)");
-				pstmt.setString(1,place );
-				pstmt.setString(2,id);
-				rss=pstmt.executeQuery();
-			
-			
-				if (!rss.next()){
-					System.out.println("꼬몬요!");
-					pstmt = conn.prepareStatement(
-					"INSERT INTO user_place (user_id, place_id) VALUES ((SELECT id from user WHERE username=?), (SELECT id FROM place WHERE place=?))");
-					pstmt.setString(1, id);
-					pstmt.setString(2, place);
-					pstmt.executeUpdate();
-				}
-			    close(pstmt);
+				// pstmt = conn.prepareStatement("select (SELECT id FROM place WHERE place=?) from user_place where user_id=(SELECT id from user WHERE username=?)");
+				// 	pstmt.setString(1,place );
+				// 	pstmt.setString(2,id);
+				// 	rss=pstmt.executeQuery();
+				
+				
+				// 	if (!rss.next()){
+				// 		System.out.println("꼬몬요!");
+				// 		pstmt = conn.prepareStatement(
+				// 		"INSERT INTO user_place (user_id, place_id) VALUES ((SELECT id from user WHERE username=?), (SELECT id FROM place WHERE place=?))");
+				// 		pstmt.setString(1, id);
+				// 		pstmt.setString(2, place);
+				// 		pstmt.executeUpdate();
+				// 	}
+				// 	close(pstmt);
 				//리뷰에서 받아온 태그 arr for 문돌리면서 place_tag 에 추가시킨다.
 				//if(태그가 존재하지 않을 경우) 새로 추가하고 카운트 1 추가
 				//else 카운트 1 증가
