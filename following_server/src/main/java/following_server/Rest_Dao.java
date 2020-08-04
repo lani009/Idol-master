@@ -151,12 +151,12 @@ public class Rest_Dao {
 			HashMap<String, JSONArray> placeMap = new HashMap<>();
 			JSONArray temp = null;
 			while (place_character.next()) {
-				if (temp.size() >= 5) {
-					// 태그 사이즈는 무조건 5개 이하
-					break;
-				}
 				if (placeMap.containsKey(place_character.getString("place"))) {
 					// 만약에 해당 place에 대한 Key 가 이미 등록 되어 있을 경우
+					if (temp.size() >= 5) {
+						// 태그 사이즈는 무조건 5개 이하
+						break;
+					}
 					temp = placeMap.get(place_character.getString("place"));
 					temp.add(place_character.getString("tagcontent"));
 				} else {
