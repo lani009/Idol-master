@@ -102,3 +102,9 @@ FastText 사용
 ![FastText-3Dplot](./FastTextPlot3D.png)
 ### 2.2. 형태소 분석기
 꼬꼬마 형태소 분석기 사용.
+
+## 3. RestFul api 설계
+### 3.1. 요청 방식
+[REST Request Method](restful.md)
+### 3.2. 서블릿 설계
+JSP 사용   
