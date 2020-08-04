@@ -226,7 +226,6 @@ public class Rest_Dao {
 
 	}
 
-
 	/**
 	 * 취향 저장
 	 * 
@@ -278,12 +277,13 @@ public class Rest_Dao {
 		try {
 			conn = ConnectionProvider.getConnection();
 			JSONArray reviews = new JSONArray();
-			JSONObject temp = new JSONObject();
 			pstmt = conn.prepareStatement("SELECT * FROM place_review Where place_name=?");
 			pstmt.setString(1, place);
 			rs = pstmt.executeQuery();
-			System.out.println(rs);
+			
+			JSONObject temp = null;
 			while (rs.next()) {
+				temp = new JSONObject();	// 작성자와 리뷰를 담는 임시 변수
 				temp.put("writer", rs.getString("username"));
 				temp.put("content", rs.getString("review"));
 				reviews.add(temp);
@@ -429,17 +429,19 @@ public class Rest_Dao {
 				userPlaceDistance[cnt][1] = dls.placeUserSim(jsonObject.toJSONString());
 				cnt++;
 			}	// userPlaceList= [["장소명", "거리"], ["장소명", "거리"], ...]
-			for (int i = 0; i < userPlaceDistance.length; i++) {
-				System.out.printf("장소명: %s 거리: %s\n", userPlaceDistance[i][0], userPlaceDistance[i][1]);
-			}
+
+			// 거리가 낮은 순서 대로 정렬
 			for (int i = userPlaceDistance.length-1; i > 0; i--) {
 				for (int j = 0; j < i; j++) {
-					if (userPlaceDistance[j][1].compareTo(userPlaceDistance[j][1]) == 1) {
+					if (Double.parseDouble(userPlaceDistance[j][1]) > Double.parseDouble(userPlaceDistance[j + 1][1])) {
 						String[] temp = userPlaceDistance[j];
 						userPlaceDistance[j] = userPlaceDistance[j + 1];
 						userPlaceDistance[j + 1] = temp;
 					}
 				}
+			}
+			for (int i = 0; i < userPlaceDistance.length; i++) {
+				System.out.printf("장소명: %s 거리: %s\n", userPlaceDistance[i][0], userPlaceDistance[i][1]);
 			}
 			JSONArray popularPlace = new JSONArray();
 			for (int i = 0; i < 5; i++) {
