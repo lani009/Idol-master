@@ -20,12 +20,24 @@
     <jsp-file>/Login/login.jsp</jsp-file>
   </servlet>
   <servlet>
+    <servlet-name>recommend</servlet-name>
+    <jsp-file>/Recommend/recommend.jsp</jsp-file>
+  </servlet>
+  <servlet>
     <servlet-name>getReview</servlet-name>
     <jsp-file>/Review/Get/getReview.jsp</jsp-file>
   </servlet>
   <servlet>
+    <servlet-name>getPlaceTag</servlet-name>
+    <jsp-file>/Recommend/Get/getPlaceTag.jsp</jsp-file>
+  </servlet>
+  <servlet>
     <servlet-name>setReview</servlet-name>
     <jsp-file>/Review/Set/setReview.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>showTaste</servlet-name>
+    <jsp-file>/Taste/Show/showTaste.jsp</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>getTaste</servlet-name>
@@ -41,8 +53,16 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>recommend</servlet-name>
+    <url-pattern>/recommend</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>getReview</servlet-name>
     <url-pattern>/review/get</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>getPlaceTag</servlet-name>
+    <url-pattern>/recommend/get</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>setReview</servlet-name>
@@ -51,6 +71,10 @@
   <servlet-mapping>
     <servlet-name>getTaste</servlet-name>
     <url-pattern>/taste/get</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>showTaste</servlet-name>
+    <url-pattern>/taste/show</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>setTaste</servlet-name>

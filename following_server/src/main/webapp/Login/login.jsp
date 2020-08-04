@@ -6,7 +6,7 @@
 <%
 	String send=request.getParameter("id");
 
-	if(send == null || send.isEmpty("")){
+	if(send == null || send.isEmpty()){
 		response.sendError(400,"get파라미터 입력안됨");
 	}
 	else{

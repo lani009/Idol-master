@@ -1,10 +1,13 @@
 package following_server.jdbc;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import following_server.DeepLearningSocket;
 
 public class JdbcUtil {
 
@@ -13,6 +16,16 @@ public class JdbcUtil {
 			try {
 				rs.close();
 			} catch (SQLException ex) {
+			}
+		}
+	}
+
+	public static void close(DeepLearningSocket dls) {
+		if (dls != null) {
+			try {
+				dls.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}

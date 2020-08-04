@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="application/json; charset=utf-8"%>
 <%@page import="following_server.Rest_Dao"%>
 <%
-boolean bool= Rest_Dao.getInstance().setReview(request.getParameter("place"),request.getParameter("id"),request.getParameter("content"));
-if(bool) {
-		out.print("{[True]}");
-	} else {
-		out.print("{[False]}");
+
+	String place = request.getParameter("place");
+	String id=request.getParameter("id");
+	String content=request.getParameter("content");
+	if(place == null || place.isEmpty()||id == null || id.isEmpty()||content == null || content.isEmpty()){
+		response.sendError(400,"get파라미터 입력안됨");
+
 	}
+	else{
+		boolean bool = Rest_Dao.getInstance().setReview(place,id,content);
+		if(bool==true) {
+			response.setStatus(200);
+		}else{
+			response.sendError(400,"데이터베이스에 존재하지 않음");
+		}
+	}
+	
 %>
