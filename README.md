@@ -2,7 +2,7 @@
 > 캡스톤 융합 디자인 프로젝트. 팀명 팔로잉
 ## 1. 데이터베이스 설계
 ### 1.1. ERD
-![Database-ERD](./Database-ERD.jpg)
+![Database-ERD](./Database-ERD.png)
 ### 1.2. CREATE 코드
     CREATE TABLE `idol` (
         `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
