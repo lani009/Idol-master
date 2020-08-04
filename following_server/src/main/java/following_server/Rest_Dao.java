@@ -126,7 +126,8 @@ public class Rest_Dao {
 		try {
 			conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = null;
-			pstmt = conn.prepareStatement("SELECT * FROM place_character");
+			pstmt = conn.prepareStatement("SELECT  * FROM place_tag_idol WHERE place_tag_idol.name=(SELECT idol.name FROM user INNER JOIN idol ON user.fandom = idol.id WHERE user.username=?)");
+			pstmt.setString(1, id);
 			place_character = pstmt.executeQuery();
 			
 			place_character.first();
@@ -153,10 +154,6 @@ public class Rest_Dao {
 			while (place_character.next()) {
 				if (placeMap.containsKey(place_character.getString("place"))) {
 					// 만약에 해당 place에 대한 Key 가 이미 등록 되어 있을 경우
-					if (temp.size() >= 5) {
-						// 태그 사이즈는 무조건 5개 이하
-						break;
-					}
 					temp = placeMap.get(place_character.getString("place"));
 					temp.add(place_character.getString("tagcontent"));
 				} else {
@@ -166,6 +163,14 @@ public class Rest_Dao {
 					placeMap.put(place_character.getString("place"), temp);
 				}	// place는 완성
 			}
+			placeMap.keySet().stream().forEach(key -> {
+				// tag 5개씩 자르기
+				JSONArray placeTemp = placeMap.get(key);
+				if (placeTemp.size() > 5) {
+					// 만약에 리스트 사이즈가 5보다 크다면, 0~5까지 자름
+					placeTemp.subList(0, 5);
+				}
+			});
 			placeMap.keySet().stream().forEach(i -> {
 				// 디버깅용
 				System.out.println("\nPlace Tag content");
