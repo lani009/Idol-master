@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="D:/git/Idol-master/following_client/lib/reactive-streams-1.0.2.jar"/>
 	<classpathentry kind="lib" path="D:/git/Idol-master/following_client/lib/rxjava-2.2.8.jar"/>
 	<classpathentry kind="lib" path="D:/git/Idol-master/following_client/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="D:/git/Idol-master/following_client/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
