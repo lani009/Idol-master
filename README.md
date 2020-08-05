@@ -101,4 +101,4 @@ FastText 사용
 ### 2.1. 학습된 데이터
 ![FastText-3Dplot](./FastTextPlot3D.png)
 ### 2.2. 형태소 분석기
-꼬꼬마 형태소 분석기 사용.
+꼬꼬마 형태소 분석기 사용.;
