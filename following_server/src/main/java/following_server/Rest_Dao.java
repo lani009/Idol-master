@@ -292,9 +292,10 @@ public class Rest_Dao {
 				temp = new JSONObject();	// 작성자와 리뷰를 담는 임시 변수
 				temp.put("writer", rs.getString("username"));
 				temp.put("content", rs.getString("review"));
+				temp.put("summery", rs.getString("summery"));
 				reviews.add(temp);
 			}
-			obj.put("content", reviews);
+			obj.put("review", reviews);
 
 		} catch (Exception e) {
 			System.out.println("리뷰불러오기오류");
@@ -306,12 +307,13 @@ public class Rest_Dao {
 		return obj.toString();
 	}
 
+
 	/**
 	 * 리뷰작성
 	 * 
 	 * @param review 리뷰
 	 */
-	public boolean setReview(String place, String id, String review) {
+	public boolean setReview(String place, String id, String review, String summery) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -323,10 +325,11 @@ public class Rest_Dao {
 			JSONParser parser = new JSONParser();
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(
-					"INSERT INTO review (palce_id, writer_id, content) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?)");
+					"INSERT INTO review (palce_id, writer_id, content,summery) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?,?)");
 			pstmt.setString(1, place);
 			pstmt.setString(2, id);
 			pstmt.setString(3, review);
+			pstmt.setString(4, summery);
 			pstmt.executeUpdate();
 			String reviewTag = dls.sendReview(review);
 			JSONObject tag = (JSONObject) parser.parse(reviewTag);
