@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        applicationId "com.example.idolmastercalendar"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        ]
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    implementation deps.kotlin.stdlib
+
+    // Jetpack
+    implementation deps.androidx.appcompat
+    implementation deps.androidx.core_ktx
+    implementation deps.androidx.constraintlayout
+    implementation deps.androidx.lifecycle.runtime_ktx
+    implementation deps.androidx.lifecycle.extensions
+    implementation deps.androidx.lifecycle.viewmodel_ktx
+    implementation deps.androidx.lifecycle.livedata_ktx
+    implementation deps.androidx.navigation.fragment_ktx
+    implementation deps.androidx.navigation.ui_ktx
+    implementation deps.androidx.material
+    implementation deps.androidx.swiperefresh
+
+    // coroutine
+    implementation deps.kotlin.coroutines.core
+    implementation deps.kotlin.coroutines.android
+    implementation deps.kotlin.coroutines.play_services
+
+    // retrofit
+    implementation deps.retrofit.core
+    implementation deps.retrofit.converter_gson
+    implementation deps.retrofit.adapter_rxjava2
+
+    // koin
+    implementation deps.koin.core
+    implementation deps.koin.viewModel
+
+    // okhttp
+    implementation deps.okhttp.core
+    implementation deps.okhttp.logging_interceptor
+
+    implementation 'com.pranavpandey.android:dynamic-utils:3.2.1'
+
+    // debugging
+    implementation deps.debugging.timber
+
+    // test
+    testImplementation deps.atsl.junit
+    androidTestImplementation deps.atsl.ext_junit
+    androidTestImplementation deps.atsl.espresso_core
+    testImplementation deps.kotlin.coroutines.test
+}
