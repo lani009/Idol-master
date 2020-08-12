@@ -11,6 +11,11 @@
     <servlet-class>following_server.jdbc.DBCPInit</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <!-- <servlet>
+    <servlet-name>TagDel</servlet-name>
+    <servlet-class>following_server.TagDel</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet> -->
 
 
   

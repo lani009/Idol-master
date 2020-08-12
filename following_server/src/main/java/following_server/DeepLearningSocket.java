@@ -128,6 +128,25 @@ public class DeepLearningSocket implements Closeable {
         return null;
     }
 
+    public double tagSim(String tag1, String tag2){
+
+        try {
+            sendString("get_tag_sim");
+            sendString(tag1);
+            sendString(tag2);
+            String encodedTag = recvString();
+
+            return Double.parseDouble(encodedTag);
+
+        } catch (Exception e) {
+           System.out.println("태그 심 오류");
+           e.printStackTrace();
+        }
+        return 0;
+
+
+    }
+
     @Override
     public void close() throws IOException {
         sendString("0");    // 종료 코드
