@@ -128,7 +128,7 @@ public class DeepLearningSocket implements Closeable {
         return null;
     }
 
-    public double tagSim(String tag1, String tag2){
+/*     public double tagSim(String tag1, String tag2){
 
         try {
             sendString("get_tag_sim");
@@ -145,7 +145,7 @@ public class DeepLearningSocket implements Closeable {
         return 0;
 
 
-    }
+    } */
 
     @Override
     public void close() throws IOException {
