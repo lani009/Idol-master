@@ -45,24 +45,40 @@ def index(socket):
 
             socket.send(sum / cnt)
 
-        elif instruction == "get_tag_sim":
-            print('4')
-            # 태그와 태그 사이의 유사도 계산
-            word1 = socket.recv()
-            word2 = socket.recv()
-            socket.send(tagParser.sim(word1, word2))
+        # elif instruction == "get_tag_sim":
+        #     print('4')
+        #     # 태그와 태그 사이의 유사도 계산
+        #     word1 = socket.recv()
+        #     word2 = socket.recv()
+        #     socket.send(tagParser.sim(word1, word2))
 
         elif instruction == '0':
             break
 
     print('')
 
+def tagDelFunction() :
+    tagDelConnObj = RESTConnection(7576)
+    tagDelConn = tagDelConnObj.getConnection()
+
+    while True:
+        instruction = tagDelConn.recv()
+        if instruction == '0':
+            tagDelConn = tagDelConnObj.getConnection()
+        print(instruction)
+        tag1 = tagDelConn.recv()
+        tag2 = tagDelConn.recv()
+
+        tagDelConn.send(tagParser.sim(tag1, tag2))
+    
+
 if __name__ == "__main__":
     print("python deep learning Server Starting!!!")
     tagParser = TagParser()
     tagParser.parse_tag("안녕하세요")
-    conn = RESTConnection()
+    conn = RESTConnection(7575)
     print("parser ready")
+    threading.Thread(target=tagDelFunction).start()
     while True:
         thread = threading.Thread(target=index, args=(conn.getConnection(),))
         thread.start()

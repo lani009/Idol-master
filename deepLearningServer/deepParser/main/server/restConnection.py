@@ -1,8 +1,8 @@
 from socket import socket, AF_INET, SOCK_STREAM
 from io import BytesIO
 class RESTConnection:
-    def __init__(self):
-        self.PORT = 7575
+    def __init__(self, port):
+        self.PORT = port
         self.HOST = ''
         self.ADDR = (self.HOST, self.PORT)
         self.serverSocket = socket(AF_INET, SOCK_STREAM)
