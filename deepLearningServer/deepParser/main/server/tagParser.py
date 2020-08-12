@@ -54,3 +54,6 @@ class TagParser:
         tag1와 tag2 사이의 거리를 리턴
         '''
         return self.model.wv.wmdistance(tag1, tag2)
+
+    def sim(self, word1, word2):
+        return self.model.wv.similarity(word1, word2)

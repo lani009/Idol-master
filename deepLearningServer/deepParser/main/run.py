@@ -45,6 +45,13 @@ def index(socket):
 
             socket.send(sum / cnt)
 
+        elif instruction == "get_tag_sim":
+            print('4')
+            # 태그와 태그 사이의 유사도 계산
+            word1 = socket.recv()
+            word2 = socket.recv()
+            socket.send(tagParser.sim(word1, word2))
+
         elif instruction == '0':
             break
 
