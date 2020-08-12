@@ -319,13 +319,12 @@ public class Rest_Dao {
 		PreparedStatement pstmt2 = null;
 		DeepLearningSocket dls = new DeepLearningSocket();
 		ResultSet rs= null;
-		ResultSet rss = null;
 		ResultSet rsss = null;
 		try {
 			JSONParser parser = new JSONParser();
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(
-					"INSERT INTO review (palce_id, writer_id, content,summery) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?,?)");
+					"INSERT INTO review (palce_id, writer_id, content, summery) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?,?)");
 			pstmt.setString(1, place);
 			pstmt.setString(2, id);
 			pstmt.setString(3, review);
@@ -348,8 +347,6 @@ public class Rest_Dao {
 				pstmt.setString(1, arr[i]);
 				rs=pstmt.executeQuery();
 				
-			
-			
 				if (!rs.next()){
 					System.out.println("꼬몬요!");
 					pstmt2 = conn.prepareStatement("INSERT INTO tag (tagcontent, tagcount) VALUES (?,1)");

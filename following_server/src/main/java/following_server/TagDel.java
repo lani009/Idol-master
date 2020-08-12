@@ -88,7 +88,7 @@ public class TagDel implements Runnable {
             place_tagMap.keySet().forEach(key -> {
                 place_tagMap.get(key).forEach(tag1 -> {
                     place_tagMap.get(key).forEach(tag2 -> {
-                        if (!tag1.equals(tag2) && !removedTag.stream().anyMatch(rmTag -> {return rmTag.equals(tag2);})) {
+                        if (!tag1.equals(tag2) && !removedTag.stream().anyMatch(rmTag -> {return rmTag.equals(tag1) || rmTag.equals(tag2);})) {
                             // 태그가 같으면 안되고, 전에 삭제된 태그면 안됨다.
                             double sim = dls.tagSim(tag1, tag2);
                             if (sim >0.7){
