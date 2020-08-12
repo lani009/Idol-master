@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<head>
+    <title>review</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+    function index() {
+    let placeName = document.getElementById("place").value;
+    let summery = document.getElementById("summery").value;
+    let review = document.getElementById("review").value;
+    let id = document.getElementById("id").value;
+
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert("send OK");
+        } else {
+            alert("send Failed");
+            console.log(this.responseText);
+        }
+    }
+    let url = "http://101.101.208.218:8080/review/set" + "?place=" + encodeURIComponent(placeName) + "&summery=" + encodeURIComponent(summery)+"&id="+encodeURIComponent(id)+"&content="+encodeURIComponent(review);
+    request.open("GET", url);
+    request.setRequestHeader("place", encodeURIComponent(placeName));
+    request.setRequestHeader("summery", encodeURIComponent(summery));
+    request.setRequestHeader("content", encodeURIComponent(review));
+    request.setRequestHeader("id", id);
+    request.send();
+}</script>
+</head>
+<body>
+    <div id="review_box">
+        <form>
+            place name : <input id='place' type='text'/><br>
+            summery  : <input id='summery' type='text'/><br>
+            id : <input id='id' type='text'/><br>
+            review content: <textarea id="review"></textarea><br>
+            <input type='submit' value='send' onclick="index()">
+        </form>
+    </div>
+</body>
