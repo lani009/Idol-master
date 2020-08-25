@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <string name="tab1">main</string>
+    <string name="tab2">map</string>
+    <string name="tab3">review</string>
+    <string name="tab4">my</string>
+</resources>
