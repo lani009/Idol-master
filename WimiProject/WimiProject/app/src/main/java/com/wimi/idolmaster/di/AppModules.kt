@@ -11,10 +11,7 @@ import com.wimi.idolmaster.data.repository.GitRepositoryImpl
 import com.wimi.idolmaster.data.repository.WimiRepositoryImpl
 import com.wimi.idolmaster.domain.repository.GitRepository
 import com.wimi.idolmaster.domain.repository.WimiRepository
-import com.wimi.idolmaster.domain.usecase.GetGistsPublicUseCase
-import com.wimi.idolmaster.domain.usecase.GetReviewUseCase
-import com.wimi.idolmaster.domain.usecase.GetTasteListUseCase
-import com.wimi.idolmaster.domain.usecase.LoginUseCase
+import com.wimi.idolmaster.domain.usecase.*
 import com.wimi.idolmaster.ui.choose.ChooserViewModel
 import com.wimi.idolmaster.ui.choose.concept.ConceptViewModel
 import com.wimi.idolmaster.ui.choose.idol.IdolViewModel
@@ -41,7 +38,7 @@ val viewModelModule = module {
     viewModel { MyPageViewModel(get()) }
     viewModel { ReviewViewModel(get(), get()) }
     viewModel { PlanViewModel(get()) }
-    viewModel { WriteReviewViewModel(get()) }
+    viewModel { WriteReviewViewModel(get(), get()) }
     viewModel { MyReviewsViewModel(get()) }
 }
 
@@ -69,6 +66,7 @@ val useCaseModule = module {
     single { GetTasteListUseCase(get()) }
     single { LoginUseCase(get()) }
     single { GetReviewUseCase(get()) }
+    single { SaveReviewUseCase(get()) }
 }
 
 val retrofit = RemoteClient.createRetrofit(true)

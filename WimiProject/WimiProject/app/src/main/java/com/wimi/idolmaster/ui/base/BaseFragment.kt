@@ -26,7 +26,7 @@ abstract class BaseFragment<B: ViewDataBinding, VM: ViewModel>(
 ) : Fragment() {
 
     private lateinit var mViewDataBinding: B
-    protected val viewModel : VM by viewModel(clazz)
+    val viewModel : VM by viewModel(clazz)
     private var mActivity: BaseActivity<*, *>? = null
 
     override fun onAttach(context: Context) {

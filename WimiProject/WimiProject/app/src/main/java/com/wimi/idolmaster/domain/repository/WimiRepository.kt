@@ -3,6 +3,7 @@ package com.wimi.idolmaster.domain.repository
 import com.wimi.idolmaster.domain.core.Result
 import com.wimi.idolmaster.domain.model.Review
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 import org.json.JSONObject
 
 interface WimiRepository {
@@ -10,4 +11,5 @@ interface WimiRepository {
     fun writeReview(id: String, content: String, place: String, summery: String): Flow<Result<JSONObject>>
     fun getReview(place: String): Flow<Result<List<Review>>>
     fun getTasteList(): Flow<Result<List<String>>>
+    fun saveReview(id: String, content: String, place: String, summery: String): Flow<Result<ResponseBody>>
 }

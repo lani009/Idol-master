@@ -5,6 +5,7 @@ import com.wimi.idolmaster.data.api.WimiApi
 import com.wimi.idolmaster.domain.core.Result
 import com.wimi.idolmaster.domain.model.Review
 import com.wimi.idolmaster.utils.AppLogger
+import okhttp3.ResponseBody
 import org.json.JSONObject
 
 class WimiRemoteDataSource(private val wimiApi: WimiApi): WimiDataSource {
@@ -66,6 +67,20 @@ class WimiRemoteDataSource(private val wimiApi: WimiApi): WimiDataSource {
             }
 
             Result.Success( resultArray)
+        } else {
+            Result.Error(Exception("Network Error"))
+        }
+    }
+
+    override suspend fun saveReview(
+        id: String,
+        content: String,
+        place: String,
+        summery: String
+    ): Result<ResponseBody> {
+        val response = wimiApi.writeReview(id, content, place, summery).execute()
+        return if(response.isSuccessful) {
+            Result.Success(response.body()!!)
         } else {
             Result.Error(Exception("Network Error"))
         }

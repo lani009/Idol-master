@@ -30,9 +30,6 @@ class ReviewAdapter(val fragmentManager: FragmentManager): RecyclerView.Adapter<
 
         fun bind(review: Review) {
             itemView.textView8.text = review.content
-            /*itemView.setOnClickListener {
-                ReviewDialog.getInstance().show(fragmentManager, "reviewDialog")
-            }*/
         }
     }
 }

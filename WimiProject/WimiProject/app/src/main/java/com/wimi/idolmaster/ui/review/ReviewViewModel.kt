@@ -30,7 +30,7 @@ class ReviewViewModel(
         getReview()
     }
 
-    private fun getReview() {
+    fun getReview() {
         viewModelScope.launch {
             getReviewUseCase("에그슬럿")
                 .flowOn(Dispatchers.IO)

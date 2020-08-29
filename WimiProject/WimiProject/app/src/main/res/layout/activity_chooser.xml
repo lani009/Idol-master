@@ -45,7 +45,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginBottom="24dp"
             android:onClick="@{() -> viewModel.onClickNext()}"
-            app:backgroundTint="#6CFF72"
+            app:backgroundTint="#BCEE8A"
             app:srcCompat="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

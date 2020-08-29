@@ -44,53 +44,13 @@
                 app:layout_constraintStart_toStartOf="@+id/textView31"
                 app:layout_constraintTop_toBottomOf="@+id/textView31">
 
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_vector"
-                    app:layout_constraintStart_toStartOf="@+id/textView7"
-                    app:layout_constraintTop_toTopOf="@+id/imageView10" />
+                <RatingBar
+                    style="@style/GlassRating"
+                    android:stepSize="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:src="@drawable/ic_vector"
-                    app:layout_constraintStart_toEndOf="@+id/imageView11"
-                    app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:src="@drawable/ic_vector"
-                    app:layout_constraintStart_toEndOf="@+id/imageView12"
-                    app:layout_constraintTop_toTopOf="@+id/imageView10" />
-
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:src="@drawable/ic_vector"
-                    app:layout_constraintStart_toEndOf="@+id/imageView13"
-                    app:layout_constraintTop_toTopOf="@+id/imageView10" />
-
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:src="@drawable/ic_vector_2"
-                    app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
             </LinearLayout>
 
@@ -101,7 +61,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:text='"점심시간보다는 저녁시간 대 추천"'
+                android:text="@={viewModel.content}"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -116,7 +76,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:text="발냄새는 조금 나지만 맛있습니다.\nBTS 사진이 많아서 좋았어요."
+                android:text="@={viewModel.summery}"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -131,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
+                android:onClick="@{() -> viewModel.saveReview()}"
                 app:backgroundTint="#6CFF72"
                 app:layout_constraintEnd_toEndOf="@+id/textView33"
                 app:layout_constraintTop_toBottomOf="@+id/textView33"

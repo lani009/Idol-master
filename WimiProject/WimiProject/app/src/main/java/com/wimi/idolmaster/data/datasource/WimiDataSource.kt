@@ -11,4 +11,5 @@ interface WimiDataSource {
     suspend fun writeReview(id: String, content: String, place: String, summery: String): Result<JSONObject>
     suspend fun getReview(place: String): Result<List<Review>>
     suspend fun getTasteList(): Result<List<String>>
+    suspend fun saveReview(id: String, content: String, place: String, summery: String): Result<ResponseBody>
 }
