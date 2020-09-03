@@ -2,6 +2,7 @@ package com.wimi.idolmaster.data.repository
 
 import com.wimi.idolmaster.data.datasource.WimiDataSource
 import com.wimi.idolmaster.domain.core.Result
+import com.wimi.idolmaster.domain.model.Review
 import com.wimi.idolmaster.domain.repository.WimiRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,11 @@ class WimiRepositoryImpl(private val wimiDataSource: WimiDataSource): WimiReposi
     override fun getReview(place: String) = flow {
         emit(Result.Loading)
         emit(wimiDataSource.getReview(place))
+    }
+
+    override fun getMyReview(id: String) = flow {
+        emit(Result.Loading)
+        emit(wimiDataSource.getMyReview(id))
     }
 
     override fun getTasteList() = flow {

@@ -3,6 +3,7 @@ package com.wimi.idolmaster.data.datasource
 import com.google.gson.JsonArray
 import com.wimi.idolmaster.data.api.WimiApi
 import com.wimi.idolmaster.domain.core.Result
+import com.wimi.idolmaster.domain.model.MyReview
 import com.wimi.idolmaster.domain.model.Review
 import com.wimi.idolmaster.utils.AppLogger
 import okhttp3.ResponseBody
@@ -47,6 +48,28 @@ class WimiRemoteDataSource(private val wimiApi: WimiApi): WimiDataSource {
                     Review(
                         reviewArray[i].asJsonObject["writer"].asString,
                         reviewArray[i].asJsonObject["content"].asString
+                    )
+                )
+            }
+            Result.Success(reviewList)
+        } else {
+            Result.Error(Exception("Network Error"))
+        }
+    }
+
+    override suspend fun getMyReview(id: String): Result<List<MyReview>> {
+        val response = wimiApi.getMyReview(id).execute()
+
+        return if(response.isSuccessful) {
+            val reviewList = ArrayList<MyReview>()
+            val reviewArray: JsonArray = response.body()!!.getAsJsonArray("review")
+
+            for (i in 0 until reviewArray.size()) {
+                reviewList.add(
+                    MyReview(
+                        reviewArray[i].asJsonObject["place"].asString,
+                        reviewArray[i].asJsonObject["content"].asString,
+                        reviewArray[i].asJsonObject["summery"].asString
                     )
                 )
             }

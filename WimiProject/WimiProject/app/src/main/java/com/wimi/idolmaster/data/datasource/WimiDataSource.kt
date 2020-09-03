@@ -2,6 +2,7 @@ package com.wimi.idolmaster.data.datasource
 
 import com.wimi.idolmaster.domain.core.Result
 import com.wimi.idolmaster.domain.model.GistsPublic
+import com.wimi.idolmaster.domain.model.MyReview
 import com.wimi.idolmaster.domain.model.Review
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -10,6 +11,7 @@ interface WimiDataSource {
     suspend fun login(id: String): Result<JSONObject>
     suspend fun writeReview(id: String, content: String, place: String, summery: String): Result<JSONObject>
     suspend fun getReview(place: String): Result<List<Review>>
+    suspend fun getMyReview(id: String): Result<List<MyReview>>
     suspend fun getTasteList(): Result<List<String>>
     suspend fun saveReview(id: String, content: String, place: String, summery: String): Result<ResponseBody>
 }

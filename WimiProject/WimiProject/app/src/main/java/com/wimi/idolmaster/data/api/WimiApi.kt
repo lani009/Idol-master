@@ -19,6 +19,9 @@ interface WimiApi {
     @GET("review/get")
     fun getReview(@Query("place") place: String): Call<JsonObject>
 
+    @GET("review/getmy")
+    fun getMyReview(@Query("id") id: String): Call<JsonObject>
+
     @GET("taste/show")
     fun getTasteList(): Call<JsonObject>
 

@@ -11,6 +11,7 @@ import timber.log.Timber
 
 class MyApplication : Application() {
 
+    val myID = MutableLiveData<String>("")
     val myIdol = MutableLiveData<IdolData>()
     val myType = MutableLiveData<ArrayList<String>>()
 

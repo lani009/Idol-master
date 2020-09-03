@@ -39,7 +39,7 @@ val viewModelModule = module {
     viewModel { ReviewViewModel(get(), get()) }
     viewModel { PlanViewModel(get()) }
     viewModel { WriteReviewViewModel(get(), get()) }
-    viewModel { MyReviewsViewModel(get()) }
+    viewModel { MyReviewsViewModel(get(), get()) }
 }
 
 val remoteModule = module {
@@ -67,6 +67,7 @@ val useCaseModule = module {
     single { LoginUseCase(get()) }
     single { GetReviewUseCase(get()) }
     single { SaveReviewUseCase(get()) }
+    single { GetMyReviewUseCase(get()) }
 }
 
 val retrofit = RemoteClient.createRetrofit(true)
