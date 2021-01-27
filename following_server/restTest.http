@@ -1,0 +1,5 @@
+GET http://101.101.208.218:8080/review/get?place=맥도날드
+
+###
+
+GET http://101.101.208.218:8080/review/get?place=맥도날드

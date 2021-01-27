@@ -11,6 +11,11 @@
     <servlet-class>following_server.jdbc.DBCPInit</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <!-- <servlet>
+    <servlet-name>TagDel</servlet-name>
+    <servlet-class>following_server.TagDel</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet> -->
 
 
   
@@ -47,6 +52,10 @@
     <servlet-name>setTaste</servlet-name>
     <jsp-file>/Taste/Set/setTaste.jsp</jsp-file>
   </servlet>
+  <servlet>
+    <servlet-name>reviewWeb</servlet-name>
+    <jsp-file>/webReview/index.html</jsp-file>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -80,7 +89,12 @@
     <servlet-name>setTaste</servlet-name>
     <url-pattern>/taste/set</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>reviewWeb</servlet-name>
+    <url-pattern>/review/web</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+
 </web-app>

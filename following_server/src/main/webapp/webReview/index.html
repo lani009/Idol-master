@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<head>
+    <title>review</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+    function index() {
+    let placeName = document.getElementById("place").value;
+    let summery = document.getElementById("summery").value;
+    let review = document.getElementById("review").value;
+    let id = document.getElementById("id").value;
+
+    if(id == "") {
+        alert("please input id");
+        return;
+    } else if(placeName == "") {
+        alert("please input place name");
+        return;
+    } else if(summery == "") {
+        alert("please input summery");
+        return;
+    } else if(review == "") {
+        alert("please input review");
+        return;
+    }
+
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == this.DONE) {
+            if (this.readyState == 4 && this.status == 200) {
+            alert("send OK");
+        } else {
+            alert("send Failed");
+            console.log(this.responseText);
+        }
+        }
+    }
+    let url = "http://101.101.208.218:8080/review/set" + "?place=" + encodeURIComponent(placeName) + "&summery=" + encodeURIComponent(summery)+"&id="+encodeURIComponent(id)+"&content="+encodeURIComponent(review);
+    request.open("GET", url);
+    // request.setRequestHeader("place", encodeURIComponent(placeName));
+    // request.setRequestHeader("summery", encodeURIComponent(summery));
+    // request.setRequestHeader("content", encodeURIComponent(review));
+    // request.setRequestHeader("id", id);
+    request.send();
+}</script>
+<style>
+    #review_box {
+        margin: 0 0;
+        width: 300px;
+    }
+    #review_box input {
+        width: 100%;
+    }
+    #review_box textarea {
+        width: 100%;
+        height: 300px;
+    }
+</style>
+</head>
+<body>
+    <div id="review_box">
+        <form>
+            place name : <br><input id='place' type='text'/><br>
+            summery  : <br><input id='summery' type='text'/><br>
+            id : <br><input id='id' type='text'/><br>
+            review content: <br><textarea id="review"></textarea><br>
+            <input type='submit' value='send' onclick="index()">
+        </form>
+    </div>
+</body>

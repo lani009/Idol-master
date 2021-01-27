@@ -29,7 +29,7 @@ import following_server.jdbc.connection.ConnectionProvider;
 
 public class Rest_Dao {
 	private Rest_Dao() {
-
+		
 	}
 
 	/**
@@ -292,9 +292,10 @@ public class Rest_Dao {
 				temp = new JSONObject();	// 작성자와 리뷰를 담는 임시 변수
 				temp.put("writer", rs.getString("username"));
 				temp.put("content", rs.getString("review"));
+				temp.put("summery", rs.getString("summery"));
 				reviews.add(temp);
 			}
-			obj.put("content", reviews);
+			obj.put("review", reviews);
 
 		} catch (Exception e) {
 			System.out.println("리뷰불러오기오류");
@@ -306,27 +307,28 @@ public class Rest_Dao {
 		return obj.toString();
 	}
 
+
 	/**
 	 * 리뷰작성
 	 * 
 	 * @param review 리뷰
 	 */
-	public boolean setReview(String place, String id, String review) {
+	public boolean setReview(String place, String id, String review, String summery) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		DeepLearningSocket dls = new DeepLearningSocket();
 		ResultSet rs= null;
-		ResultSet rss = null;
 		ResultSet rsss = null;
 		try {
 			JSONParser parser = new JSONParser();
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(
-					"INSERT INTO review (palce_id, writer_id, content) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?)");
+					"INSERT INTO review (palce_id, writer_id, content, summery) VALUES ((SELECT id from place WHERE place=?), (SELECT id FROM user WHERE username=?), ?,?)");
 			pstmt.setString(1, place);
 			pstmt.setString(2, id);
 			pstmt.setString(3, review);
+			pstmt.setString(4, summery);
 			pstmt.executeUpdate();
 			String reviewTag = dls.sendReview(review);
 			JSONObject tag = (JSONObject) parser.parse(reviewTag);
@@ -337,15 +339,14 @@ public class Rest_Dao {
 			for(int i = 0; i<insertTag.size();i++){
 				arr[i]= (String) insertTag.get(i);
 			}
+			System.out.println("1");
 			//["조명 예쁘음","주차장 넓음"]
 			//for문으로 하나씩 insert 시키는데, 만약 이미 있을 경우 카운트만 1증가 시키고 없을 경우 추가 시키고 count 1 증가
 			for(int i=0; i<arr.length; i++){
 				pstmt = conn.prepareStatement("select tagcontent from tag where tagcontent=?");
 				pstmt.setString(1, arr[i]);
 				rs=pstmt.executeQuery();
-
-			
-			
+				
 				if (!rs.next()){
 					System.out.println("꼬몬요!");
 					pstmt2 = conn.prepareStatement("INSERT INTO tag (tagcontent, tagcount) VALUES (?,1)");
@@ -359,7 +360,9 @@ public class Rest_Dao {
 					close(pstmt2);
 				}
 				close(pstmt);
+				
 			}
+			System.out.println("2");
 			//사용자가 갔던 장소를 추가
 			
 				// pstmt = conn.prepareStatement("select (SELECT id FROM place WHERE place=?) from user_place where user_id=(SELECT id from user WHERE username=?)");
@@ -399,7 +402,11 @@ public class Rest_Dao {
 						pstmt2.executeUpdate();
 					}
 				}
-
+				System.out.println("3");
+				TagDel tagDel = new TagDel();
+				Thread tagThread = new Thread(tagDel, "태그 삭제 기계");
+				tagThread.start();
+				System.out.println("태그 삭제 기계 실행");
 		} catch (Exception e) {
 			System.out.println("리뷰등록 오류");
 			e.printStackTrace();
@@ -475,6 +482,7 @@ public class Rest_Dao {
 	}
 
 	public static Rest_Dao getInstance() {
+		
 		return Holder.INSTANCE;
 	}
 }

@@ -1,0 +1,13 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#review_box {
+    margin: 0 auto;
+}
+
+#review {
+    padding: 30px;
+    padding-left: 50px;
+}
